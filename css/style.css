@@ -21,8 +21,12 @@
     background-color: #CEC8EF;
 }
 
-.fondo-oscuro{
+.fondo-pantalla{
     background-color: #253529;
+}
+
+.placeholder-pantalla{
+    color: #253529;
 }
 
 body {
