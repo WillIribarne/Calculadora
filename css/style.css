@@ -1,16 +1,30 @@
 .borde-botón{
     border-style: solid;
-    border-width: 3px;
+    background-color: #1A1110;
+    border-radius: 50px;
 }
 
 .borde-pantalla{
     border-style: double;
     border-width: 5px;
+    border-color: #1A1110;
 }
 
 .borde-calculadora{
     border-style: solid;
     border-width: 10px;
     border-radius: 50px;
-    border-color: rgba(158, 158, 158, 0.959);
+    border-color: #1A1110;
+}
+
+.fondo-calculadora{
+    background-color: #CEC8EF;
+}
+
+.fondo-oscuro{
+    background-color: #253529;
+}
+
+body {
+    background-image: url('imagenes/matematica.jpg');
 }
