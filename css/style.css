@@ -1,0 +1,16 @@
+.borde-botón{
+    border-style: solid;
+    border-width: 3px;
+}
+
+.borde-pantalla{
+    border-style: double;
+    border-width: 5px;
+}
+
+.borde-calculadora{
+    border-style: solid;
+    border-width: 10px;
+    border-radius: 50px;
+    border-color: rgba(158, 158, 158, 0.959);
+}
