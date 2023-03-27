@@ -20,6 +20,11 @@ function estadoPantalla(){
     }
 }
 
+function error(){
+    resetPantalla;
+    actualizaPantalla("ERROR: RAÍZ DE NUM NEGATIVO");
+}
+
 function actualizaPantalla(n){
     stringPantalla += n;
     pantalla.innerText = stringPantalla;
@@ -38,24 +43,34 @@ function insertaNumero(n){
     }
 }
 
-function muestraSumaEnPantalla(){
-
-}
-
-function muestraRestaEnPantalla(){
-
-}
-
-function muestraMultiplicacionEnPantalla(){
-
-}
-
-function muestraDivisionEnPantalla(){
-
+function muestraSumaRestaMultiplicacionDivisionEnPantalla(op){
+    if (stringPantalla != '' && stringNumero != ''){
+        actualizaPantalla(` ${op} `);
+        terminosNumericos.push(stringNumero);
+        operacionesTerminosNumericos.push(op);
+        stringNumero = '';
+    }
 }
 
 function ejecutaRaiz(){
-
+    let num = 0;
+    let res = 0;
+    if (stringNumero < 0){
+        error;
+    } else {
+        if (Number.isInteger(stringNumero)){
+            num = parseInt(stringNumero);
+        } else {
+            num = parseFloat(stringNumero);
+        }
+        res = Math.sqrt(num);
+        if (res % 1 !== 0){
+            res = res.toFixed(6);
+        }
+        stringPantalla = (stringPantalla.slice(0, stringPantalla.length - stringNumero.length)); // Problema con el stringPantalla; raiz multiple sobreescribe todo el stringPantalla
+        actualizaPantalla(res);
+        stringNumero = res;
+    }
 }
 
 function ejecutaPotenciaCuadrado(){
@@ -70,20 +85,32 @@ for (let i = 0; i < numeros.length; i++) {
     }
 }
 
-const diccionario = {
-    '+': muestraSumaEnPantalla,
-    '-': muestraRestaEnPantalla,
-    '*': muestraMultiplicacionEnPantalla,
-    '/': muestraDivisionEnPantalla,
+/*const diccionario = {
+    '+': muestraSumaRestaMultiplicacionDivisionEnPantalla,
+    '-': muestraSumaRestaMultiplicacionDivisionEnPantalla,
+    '*': muestraSumaRestaMultiplicacionDivisionEnPantalla,
+    '/': muestraSumaRestaMultiplicacionDivisionEnPantalla,
     'RAÍZ': ejecutaRaiz,
     'x2': ejecutaPotenciaCuadrado,
 }
-diccionario['+'];
+diccionario['+']; */
+
 for (let i = 0; i < operaciones.length; i++) {
     const operacion = operaciones[i];
-    operacion.onclick = diccionario[operacion.innerText]
+    operacion.onclick = function (){
+        op = operacion.innerText;
+        if (op == '+' || op == '-' || op == '/' || op == '*'){
+            muestraSumaRestaMultiplicacionDivisionEnPantalla(op);
+        } else if (op == 'RAÍZ'){
+            ejecutaRaiz();
+        } else {
+            ejecutaPotenciaCuadrado();
+        }
+        
+    }
 }
 
 borrarPantalla.onclick = resetPantalla;
+
 
 estadoPantalla();
