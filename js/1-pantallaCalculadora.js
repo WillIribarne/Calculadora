@@ -38,7 +38,19 @@ function resetPantalla(){
     operacionesTerminosNumericos = [];
 }
 
+function hacerSaludo(){
+    resetPantalla();
+    actualizaPantalla("Hola! :D");
+}
+
+function borrarSaludoSiNuevoInput(){
+    if (stringPantalla === "Hola! :D"){
+        stringPantalla = '';
+    }
+}
+
 function insertaNumero(n){
+    borrarSaludoSiNuevoInput();
     if ((n != 0 && stringNumero == '') || stringNumero != 0){
         stringNumero += n;
         actualizaPantalla(n);
@@ -200,6 +212,7 @@ for (let i = 0; i < operaciones.length; i++) {
 comaDecimal.onclick = insertaDecimal;
 borrarPantalla.onclick = resetPantalla;
 resultado.onclick = hacerResultado;
+saludo.onclick = hacerSaludo;
 
 
 
