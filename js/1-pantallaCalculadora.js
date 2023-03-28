@@ -22,7 +22,7 @@ function estadoPantalla(){
 
 function error(){
     resetPantalla;
-    actualizaPantalla("ERROR: RAÍZ DE NUM NEGATIVO");
+    actualizaPantalla("ERROR");
 }
 
 function actualizaPantalla(n){
@@ -34,6 +34,8 @@ function resetPantalla(){
     pantalla.innerText = '';
     stringPantalla = '';
     stringNumero = '';
+    terminosNumericos = [];
+    operacionesTerminosNumericos = [];
 }
 
 function insertaNumero(n){
@@ -43,19 +45,57 @@ function insertaNumero(n){
     }
 }
 
+function insertaDecimal(){
+    stringNumero += '.';
+    actualizaPantalla('.');
+}
+
+function agregaNumero(){
+    parseaNumero();
+    terminosNumericos.push(stringNumero);
+}
+
+function parseaNumero(){
+    let i = 0;
+    let esDecimal = false;
+    while (!esDecimal && i < stringNumero.length){
+        if (stringNumero[i] == '.'){
+            esDecimal = true;
+        }
+        i++;
+    }
+    if (esDecimal){
+        stringNumero = parseFloat(stringNumero);
+    } else {
+        stringNumero = parseInt(stringNumero);
+    }
+}
+
+function agregaOperacion(op){
+    operacionesTerminosNumericos.push(op);
+}
+
+function agregaNumYOp(op){
+    agregaNumero();
+    agregaOperacion(op);
+}
+
 function muestraSumaRestaMultiplicacionDivisionEnPantalla(op){
     if (stringPantalla != '' && stringNumero != ''){
         actualizaPantalla(` ${op} `);
-        terminosNumericos.push(stringNumero);
-        operacionesTerminosNumericos.push(op);
-        stringNumero = '';
+        agregaNumYOp(op);
+        limpiaBufferNumero();
     }
+}
+
+function limpiaBufferNumero(){
+    stringNumero = '';
 }
 
 function ejecutaRaiz(){
     let num = 0;
     let res = 0;
-    if (stringNumero < 0){
+    if (stringNumero < 0 || stringNumero === ''){
         error;
     } else {
         if (Number.isInteger(stringNumero)){
@@ -65,18 +105,76 @@ function ejecutaRaiz(){
         }
         res = Math.sqrt(num);
         if (res % 1 !== 0){
-            res = res.toFixed(6);
+            res = res.toFixed(2);
         }
-        stringPantalla = (stringPantalla.slice(0, stringPantalla.length - stringNumero.length)); // Problema con el stringPantalla; raiz multiple sobreescribe todo el stringPantalla
-        actualizaPantalla(res);
+        stringPantalla = (stringPantalla.slice(0, stringPantalla.length - stringNumero.length)); // Problema con el stringPantalla; raiz multiple sobreescribe la pantalla
         stringNumero = res;
+        actualizaPantalla(String(res));
     }
 }
 
 function ejecutaPotenciaCuadrado(){
-
+    let num = 0;
+    let res= 0;
+    if (stringNumero === ''){
+        error;
+    } else {
+        if (Number.isInteger(stringNumero)){
+            num = parseInt(stringNumero);
+        } else {
+            num = parseFloat(stringNumero);
+        }
+        res = num ** 2;
+        if (res % 1 !== 0){
+            res = res.toFixed(2);
+        }
+        stringPantalla = (stringPantalla.slice(0, stringPantalla.length - stringNumero.length)); // Problema con el stringPantalla; pot multiple a veces sobreescribe la pantalla
+        stringNumero = res;
+        actualizaPantalla(String(res));
+    }
 }
 // const ejecutaPotenciaCuadrado = function(){}; es lo mismo que la de arriba
+
+function hacerResultado(){
+    if (typeof resultado !== 'undefined'){
+        agregaNumero(); // nota para pensar: siempre que hay un * o /, se hace la mul o div entre los terminos i y i+1. Si luego hay otro * o /, se hace el resultado de eso con el num siguiente
+        simplificaTerminosMulYDiv();
+        let resultado = terminosNumericos[0];
+        for (let i = 0; i < operacionesTerminosNumericos.length; i++) {
+            const op = operacionesTerminosNumericos[i];
+            if (op == '+'){
+             resultado += terminosNumericos[i+1];
+            } else if (op == '-'){
+                resultado -= terminosNumericos[i+1];
+            }
+        }
+    resetPantalla();
+    actualizaPantalla(resultado.toString());
+    stringNumero = resultado;
+    }
+}
+
+function simplificaTerminosMulYDiv(){
+    let num = 0;
+    let cont = 0;
+    while (cont < operacionesTerminosNumericos.length){
+        if (operacionesTerminosNumericos[cont] == '*' || operacionesTerminosNumericos[cont] == '/' ){
+            if (operacionesTerminosNumericos[cont] == '*'){
+                num = terminosNumericos[cont] * terminosNumericos[cont+1];
+                terminosNumericos[cont] = num;
+                terminosNumericos.splice(cont+1, 1);
+                operacionesTerminosNumericos.splice(cont, 1);
+            } else {
+                num = terminosNumericos[cont] / terminosNumericos[cont+1];
+                terminosNumericos[cont] = num;
+                terminosNumericos.splice(cont+1, 1);
+                operacionesTerminosNumericos.splice(cont, 1);
+            }
+        } else {
+            cont++;
+        }
+    }
+}
 
 for (let i = 0; i < numeros.length; i++) {
     const numero = numeros[i];
@@ -84,6 +182,26 @@ for (let i = 0; i < numeros.length; i++) {
         insertaNumero(numero.innerText);
     }
 }
+
+for (let i = 0; i < operaciones.length; i++) {
+    const operacion = operaciones[i];
+    operacion.onclick = function (){
+        op = operacion.innerText;
+        if (op == '+' || op == '-' || op == '/' || op == '*'){
+            muestraSumaRestaMultiplicacionDivisionEnPantalla(op);
+        } else if (op == 'RAÍZ'){
+            ejecutaRaiz(op);
+        } else {
+            ejecutaPotenciaCuadrado(op);
+        }
+        
+    }
+}
+comaDecimal.onclick = insertaDecimal;
+borrarPantalla.onclick = resetPantalla;
+resultado.onclick = hacerResultado;
+
+
 
 /*const diccionario = {
     '+': muestraSumaRestaMultiplicacionDivisionEnPantalla,
@@ -94,23 +212,3 @@ for (let i = 0; i < numeros.length; i++) {
     'x2': ejecutaPotenciaCuadrado,
 }
 diccionario['+']; */
-
-for (let i = 0; i < operaciones.length; i++) {
-    const operacion = operaciones[i];
-    operacion.onclick = function (){
-        op = operacion.innerText;
-        if (op == '+' || op == '-' || op == '/' || op == '*'){
-            muestraSumaRestaMultiplicacionDivisionEnPantalla(op);
-        } else if (op == 'RAÍZ'){
-            ejecutaRaiz();
-        } else {
-            ejecutaPotenciaCuadrado();
-        }
-        
-    }
-}
-
-borrarPantalla.onclick = resetPantalla;
-
-
-estadoPantalla();
