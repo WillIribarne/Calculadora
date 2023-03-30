@@ -30,7 +30,8 @@
 }
 
 .altura-pantalla{
-    height: 5.1em;
+    min-height: calc(3.9rem + .9vw);
+    height: auto;
 }
 
 body {

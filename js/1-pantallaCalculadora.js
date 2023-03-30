@@ -119,7 +119,8 @@ function ejecutaRaiz(){
         if (res % 1 !== 0){
             res = res.toFixed(2);
         }
-        stringPantalla = (stringPantalla.slice(0, stringPantalla.length - stringNumero.length)); // Problema con el stringPantalla; raiz multiple sobreescribe la pantalla
+
+        stringPantalla = (stringPantalla.slice(0, stringPantalla.length - String(stringNumero).length));
         stringNumero = res;
         actualizaPantalla(String(res));
     }
@@ -140,7 +141,7 @@ function ejecutaPotenciaCuadrado(){
         if (res % 1 !== 0){
             res = res.toFixed(2);
         }
-        stringPantalla = (stringPantalla.slice(0, stringPantalla.length - stringNumero.length)); // Problema con el stringPantalla; pot multiple a veces sobreescribe la pantalla
+        stringPantalla = (stringPantalla.slice(0, stringPantalla.length - String(stringNumero).length));
         stringNumero = res;
         actualizaPantalla(String(res));
     }
@@ -149,7 +150,7 @@ function ejecutaPotenciaCuadrado(){
 
 function hacerResultado(){
     if (typeof resultado !== 'undefined'){
-        agregaNumero(); // nota para pensar: siempre que hay un * o /, se hace la mul o div entre los terminos i y i+1. Si luego hay otro * o /, se hace el resultado de eso con el num siguiente
+        agregaNumero();
         simplificaTerminosMulYDiv();
         let resultado = terminosNumericos[0];
         for (let i = 0; i < operacionesTerminosNumericos.length; i++) {
@@ -213,15 +214,3 @@ comaDecimal.onclick = insertaDecimal;
 borrarPantalla.onclick = resetPantalla;
 resultado.onclick = hacerResultado;
 saludo.onclick = hacerSaludo;
-
-
-
-/*const diccionario = {
-    '+': muestraSumaRestaMultiplicacionDivisionEnPantalla,
-    '-': muestraSumaRestaMultiplicacionDivisionEnPantalla,
-    '*': muestraSumaRestaMultiplicacionDivisionEnPantalla,
-    '/': muestraSumaRestaMultiplicacionDivisionEnPantalla,
-    'RAÍZ': ejecutaRaiz,
-    'x2': ejecutaPotenciaCuadrado,
-}
-diccionario['+']; */

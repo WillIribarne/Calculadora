@@ -14,54 +14,54 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container p-5 me-5 mt-5 col-md-8 offset-md-2 col-lg-7 offset-lg-2 col-xl-6 offset-xl-3 fondo-calculadora borde-calculadora"> 
-        <div class="container pt-2 m-2 row borde-pantalla fondo-pantalla altura-pantalla">
+    <div id="calculadora" class="container p-2 p-sm-5 mt-5 col-md-8 offset-md-2 col-lg-7 offset-lg-2 col-xl-6 offset-xl-3 fondo-calculadora borde-calculadora"> 
+        <div class="container pt-sm-2 mx-1 mt-4 m-sm-2 row borde-pantalla fondo-pantalla altura-pantalla">
             <p id="pantalla" class="text-end text-light fs-2 fw-medium"></p>
         </div>
-        <div class="container g-0 pt-2 m-3 row">
-                <button id="borrarPantalla" class="container col-2 p-3 borde-botón text-center text-white fs-5">CE</button>
+        <div class="container g-0 pt-2 m-sm-3 row">
+                <button id="borrarPantalla" class="container col-2 py-3 p-sm-3 borde-botón text-center text-white fs-5 gx-0">CE</button>
 
-                <button class="container operacion col-2 p-3 borde-botón text-center text-white fs-5">RAÍZ</button>
+                <button class="container operacion col-2 py-3 p-sm-3 borde-botón text-center text-white fs-5 gx-0">√</button>
 
-                <button class="container operacion col-2 p-3 borde-botón text-center text-white fs-5">x<sup>2</sup></button>
+                <button class="container operacion col-2 py-3 p-sm-3 borde-botón text-center text-white fs-5 gx-0">x<sup>2</sup></button>
 
-                <button class="container operacion col-4 p-3 borde-botón text-center text-white fs-2">/</button>
+                <button class="container operacion col-2 col-sm-4 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">/</button>
         </div>
-        <div class="container g-0 pt-2 m-3 row">
-                <button class="container numero col-2 p-3 borde-botón text-center text-white fs-2">7</button>
+        <div class="container g-0 pt-2 m-sm-3 row">
+                <button class="container numero col-2 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">7</button>
 
-                <button class="container numero col-2 p-3 borde-botón text-center text-white fs-2">8</button>
+                <button class="container numero col-2 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">8</button>
 
-                <button class="container numero col-2 p-3 borde-botón text-center text-white fs-2">9</button>
+                <button class="container numero col-2 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">9</button>
 
-                <button class="container operacion col-4 pt-3 borde-botón text-center text-white fs-2">*</button>
+                <button class="container operacion col-2 col-sm-4 pt-3 borde-botón text-center text-white fs-2 gx-0">*</button>
         </div>
-        <div class="container g-0 pt-2 m-3 row">
-                <button class="container numero col-2 p-3 borde-botón text-center text-white fs-2">4</button>
+        <div class="container g-0 pt-2 m-sm-3 row">
+                <button class="container numero col-2 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">4</button>
 
-                <button class="container numero col-2 p-3 borde-botón text-center text-white fs-2">5</button>
+                <button class="container numero col-2 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">5</button>
 
-                <button class="container numero col-2 p-3 borde-botón text-center text-white fs-2">6</button>
+                <button class="container numero col-2 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">6</button>
 
-                <button class="container operacion col-4 borde-botón text-center text-white fs-2">-</button>
+                <button class="container operacion col-2 col-sm-4 borde-botón text-center text-white fs-2 gx-0">-</button>
         </div>
-        <div class="container g-0 pt-2 m-3 row">
-                <button class="container numero col-2 p-3 borde-botón text-center text-white fs-2">1</button>
+        <div class="container g-0 pt-2 m-sm-3 row">
+                <button class="container numero col-2 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">1</button>
 
-                <button class="container numero col-2 p-3 borde-botón text-center text-white fs-2">2</button>
+                <button class="container numero col-2 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">2</button>
 
-                <button class="container numero col-2 p-3 borde-botón text-center text-white fs-2">3</button>
+                <button class="container numero col-2 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">3</button>
 
-                <button class="container operacion col-4 p-3 borde-botón text-center text-white fs-2">+</button>
+                <button class="container operacion col-2 col-sm-4 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">+</button>
         </div>
-        <div class="container g-0 pt-2 m-3 row">
-                <button id="saludo" class="container col-2 p-3 borde-botón text-center text-white fs-5">Hi!</button>
+        <div class="container g-0 pt-2 m-sm-3 row">
+                <button id="saludo" class="container col-2 p-sm-3 borde-botón text-center text-white fs-5 gx-0">Hi!</button>
 
-                <button class="container numero col-2 p-3 borde-botón text-center text-white fs-2">0</button>
+                <button class="container numero col-2 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">0</button>
 
-                <button id="comaDecimal" class="container col-2 p-3 borde-botón text-center text-white fs-2">,</button>
+                <button id="comaDecimal" class="container col-2 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">,</button>
 
-                <button id="resultado" class="container col-4 p-3 borde-botón text-center text-white fs-2">=</button>
+                <button id="resultado" class="container col-2 col-sm-4 py-3 p-sm-3 borde-botón text-center text-white fs-2 gx-0">=</button>
         </div>
     </div> 
 
