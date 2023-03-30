@@ -202,7 +202,7 @@ for (let i = 0; i < operaciones.length; i++) {
         op = operacion.innerText;
         if (op == '+' || op == '-' || op == '/' || op == '*'){
             muestraSumaRestaMultiplicacionDivisionEnPantalla(op);
-        } else if (op == 'RAÍZ'){
+        } else if (op == '√'){
             ejecutaRaiz(op);
         } else {
             ejecutaPotenciaCuadrado(op);
