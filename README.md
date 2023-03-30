@@ -6,3 +6,5 @@ Fixes futuros:
 2. Pantalla (tamaño extensible)
 3. Mobile/responsive des.
 4. Numeros negativos
+5. Division por 0
+6. Numero y operacion sin un 2do numero resulta en un Nan
