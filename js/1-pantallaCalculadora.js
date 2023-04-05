@@ -51,36 +51,47 @@ function borrarSaludoSiNuevoInput(){
 
 function insertaNumero(n){
     borrarSaludoSiNuevoInput();
-    if ((n != 0 && stringNumero == '') || stringNumero != 0){
+    if ((stringNumero !== '0' && n === 0) || n != 0){
         stringNumero += n;
         actualizaPantalla(n);
     }
 }
 
 function insertaDecimal(){
-    stringNumero += '.';
-    actualizaPantalla('.');
+    if (!tieneDecimal(stringNumero.toString()) && stringNumero !== ''){
+        stringNumero += '.';
+        actualizaPantalla('.');
+    }
+}
+
+function insertaNegativo(){
+
 }
 
 function agregaNumero(){
-    parseaNumero();
+    stringNumero = parseaNumero(stringNumero);
     terminosNumericos.push(stringNumero);
 }
 
-function parseaNumero(){
+function parseaNumero(n){
+    if (tieneDecimal(n.toString())){
+        n = parseFloat(n);
+    } else {
+        n = parseInt(n);
+    }
+    return n;
+}
+
+function tieneDecimal(n){
     let i = 0;
     let esDecimal = false;
-    while (!esDecimal && i < stringNumero.length){
-        if (stringNumero[i] == '.'){
+    while (!esDecimal && i < n.length){
+        if (n[i] == '.'){
             esDecimal = true;
         }
         i++;
     }
-    if (esDecimal){
-        stringNumero = parseFloat(stringNumero);
-    } else {
-        stringNumero = parseInt(stringNumero);
-    }
+    return esDecimal;
 }
 
 function agregaOperacion(op){
@@ -93,10 +104,13 @@ function agregaNumYOp(op){
 }
 
 function muestraSumaRestaMultiplicacionDivisionEnPantalla(op){
-    if (stringPantalla != '' && stringNumero != ''){
+    if (stringPantalla != '' && (stringNumero != '' && stringNumero != '-')){
         actualizaPantalla(` ${op} `);
         agregaNumYOp(op);
         limpiaBufferNumero();
+    } else if (op === '-' && stringNumero === ''){
+        actualizaPantalla('-');
+        stringNumero += '-';
     }
 }
 
@@ -161,6 +175,7 @@ function hacerResultado(){
                 resultado -= terminosNumericos[i+1];
             }
         }
+    resultado = parseaNumero(resultado);
     resetPantalla();
     actualizaPantalla(resultado.toString());
     stringNumero = resultado;
@@ -192,7 +207,7 @@ function simplificaTerminosMulYDiv(){
 for (let i = 0; i < numeros.length; i++) {
     const numero = numeros[i];
     numero.onclick = function (){
-        insertaNumero(numero.innerText);
+        insertaNumero(parseInt(numero.innerText));
     }
 }
 
