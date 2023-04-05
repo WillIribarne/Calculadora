@@ -104,7 +104,7 @@ function agregaNumYOp(op){
 }
 
 function muestraSumaRestaMultiplicacionDivisionEnPantalla(op){
-    if (stringPantalla != '' && (stringNumero != '' && stringNumero != '-')){
+    if (stringPantalla != '' && (stringNumero != '' && stringNumero != '-') && !pantallaMuestraErrorOSaludo()){
         actualizaPantalla(` ${op} `);
         agregaNumYOp(op);
         limpiaBufferNumero();
@@ -163,10 +163,14 @@ function ejecutaPotenciaCuadrado(){
 // const ejecutaPotenciaCuadrado = function(){}; es lo mismo que la de arriba
 
 function hacerResultado(){
+    let resultado = terminosNumericos[0];
     if (typeof resultado !== 'undefined' && !pantallaMuestraErrorOSaludo()){
         agregaNumero();
         simplificaTerminosMulYDiv();
-        let resultado = terminosNumericos[0];
+        resultado = terminosNumericos[0];
+        if (pantallaMuestraErrorOSaludo()){
+            return;
+        }
         for (let i = 0; i < operacionesTerminosNumericos.length; i++) {
             const op = operacionesTerminosNumericos[i];
             if (op == '+'){
@@ -197,10 +201,16 @@ function simplificaTerminosMulYDiv(){
                 terminosNumericos.splice(cont+1, 1);
                 operacionesTerminosNumericos.splice(cont, 1);
             } else {
-                num = terminosNumericos[cont] / terminosNumericos[cont+1];
-                terminosNumericos[cont] = num;
-                terminosNumericos.splice(cont+1, 1);
-                operacionesTerminosNumericos.splice(cont, 1);
+                if (terminosNumericos[cont+1] === 0){
+                    resetPantalla();
+                    error("ERROR: división por 0");
+                    return;
+                } else {
+                    num = terminosNumericos[cont] / terminosNumericos[cont+1];
+                    terminosNumericos[cont] = num;
+                    terminosNumericos.splice(cont+1, 1);
+                    operacionesTerminosNumericos.splice(cont, 1);
+                }
             }
         } else {
             cont++;
