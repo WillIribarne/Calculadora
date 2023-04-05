@@ -20,9 +20,13 @@ function estadoPantalla(){
     }
 }
 
-function error(){
-    resetPantalla;
-    actualizaPantalla("ERROR");
+function error(motivo){
+    resetPantalla();
+    actualizaPantalla(motivo);
+}
+
+function pantallaMuestraErrorOSaludo(){
+    return (stringPantalla == "Hola! :D" || stringPantalla.includes("ERROR"));
 }
 
 function actualizaPantalla(n){
@@ -43,14 +47,14 @@ function hacerSaludo(){
     actualizaPantalla("Hola! :D");
 }
 
-function borrarSaludoSiNuevoInput(){
-    if (stringPantalla === "Hola! :D"){
+function borrarSiNuevoInput(){
+    if (stringPantalla === "Hola! :D" || stringPantalla.includes("ERROR")){
         stringPantalla = '';
     }
 }
 
 function insertaNumero(n){
-    borrarSaludoSiNuevoInput();
+    borrarSiNuevoInput();
     if ((stringNumero !== '0' && n === 0) || n != 0){
         stringNumero += n;
         actualizaPantalla(n);
@@ -62,10 +66,6 @@ function insertaDecimal(){
         stringNumero += '.';
         actualizaPantalla('.');
     }
-}
-
-function insertaNegativo(){
-
 }
 
 function agregaNumero(){
@@ -108,7 +108,7 @@ function muestraSumaRestaMultiplicacionDivisionEnPantalla(op){
         actualizaPantalla(` ${op} `);
         agregaNumYOp(op);
         limpiaBufferNumero();
-    } else if (op === '-' && stringNumero === ''){
+    } else if (op === '-' && stringNumero === '' && !pantallaMuestraErrorOSaludo()){
         actualizaPantalla('-');
         stringNumero += '-';
     }
@@ -122,7 +122,7 @@ function ejecutaRaiz(){
     let num = 0;
     let res = 0;
     if (stringNumero < 0 || stringNumero === ''){
-        error;
+        error("ERROR: raíz de num negativo");
     } else {
         if (Number.isInteger(stringNumero)){
             num = parseInt(stringNumero);
@@ -144,7 +144,7 @@ function ejecutaPotenciaCuadrado(){
     let num = 0;
     let res= 0;
     if (stringNumero === ''){
-        error;
+        error('');
     } else {
         if (Number.isInteger(stringNumero)){
             num = parseInt(stringNumero);
@@ -163,7 +163,7 @@ function ejecutaPotenciaCuadrado(){
 // const ejecutaPotenciaCuadrado = function(){}; es lo mismo que la de arriba
 
 function hacerResultado(){
-    if (typeof resultado !== 'undefined'){
+    if (typeof resultado !== 'undefined' && !pantallaMuestraErrorOSaludo()){
         agregaNumero();
         simplificaTerminosMulYDiv();
         let resultado = terminosNumericos[0];
@@ -177,7 +177,11 @@ function hacerResultado(){
         }
     resultado = parseaNumero(resultado);
     resetPantalla();
-    actualizaPantalla(resultado.toString());
+    if (resultado.toString() == 'NaN'){
+        error("ERROR: falta un término");
+    } else {
+        actualizaPantalla(resultado.toString());
+    }
     stringNumero = resultado;
     }
 }
