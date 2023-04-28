@@ -236,9 +236,9 @@ for (let i = 0; i < operaciones.length; i++) {
         } else {
             ejecutaPotenciaCuadrado(op);
         }
-        
     }
 }
+
 comaDecimal.onclick = insertaDecimal;
 borrarPantalla.onclick = resetPantalla;
 resultado.onclick = hacerResultado;
